@@ -100,15 +100,6 @@ ul{
 .itemList .col[class*="gr3_04"]{
 	border-left-color: #fffafa;
 }
-@keyframes show{
-    from{
-        transform:scale(0,0);
-    }
-    to{
-        opacity: 1;
-		transform:scale(1,1);
-    }
-}
 </style>
 </head>
 <body>
@@ -244,13 +235,60 @@ $(function(){
 			showClass.addClass(activeClass);
 			sortTarget.each(function(){
 				if($(this).hasClass(activeClass)){
-					$(this).show();
+					if(!$(this).is(':visible')){
+						$(this).show().css({
+							'z-index':'1'
+						}).animate(
+							{
+								'z-index':'100'
+							},
+							{
+								duration:300,
+								step:function(now){
+									$(this).css({
+										transform:'scale('+ now/100 +')'
+									});
+								}
+							}
+						);
+					}
 				} else {
-					$(this).hide();
+					$(this).css({
+						'z-index':'100'
+					}).animate(
+						{
+							'z-index':'0'
+						},
+						{
+							duration:300,
+							step:function(now){
+								$(this).css({
+									transform:'scale('+ now*0.01 +')'
+								});
+							},
+							complete:function(){
+								$(this).hide();
+							}
+						}
+					);
 				}
 			});
 		} else {
-			sortTarget.show().addClass(activeClass);
+			sortTarget.show().addClass(activeClass).show().css({
+				'z-index':'1'
+			}).animate(
+				{
+					'z-index':'100'
+				},
+				{
+					duration:300,
+					step:function(now){
+						$(this).css({
+							transform:'scale('+ now/100 +')'
+						});
+					}
+				}
+			);
 			var defHref = location.href.replace(/\?.*$/,"");
 			history.pushState(null,null,defHref);
 		}
