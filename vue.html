@@ -14,7 +14,7 @@ img{
 }
 .wrap{
   display: flex;
-  width: 1080px;
+  width: 980px;
   margin: 0 auto;
 }
 .menu{
@@ -26,16 +26,29 @@ img{
   flex-wrap: wrap;
 }
 .boxWrap .box{
-  width: calc(25% - 20px);
+  width: 181px;
   border: 1px solid #000;
   box-sizing: border-box;
   padding: 10px;
+  transition: all 0.5s;
 }
 .boxWrap .box:not(:nth-child(4n+1)){
   margin-left: 20px;
 }
 .boxWrap .box:nth-child(n+5){
   margin-top: 20px;
+}
+
+.item-enter-active {
+  transition: all 1s;
+}
+.item-leave-active {
+  position: absolute;
+  transition: all 0.3s;
+}
+.item-enter, .item-leave-to{
+  transform: scale(0);
+  opacity: 0;
 }
 
 </style>
@@ -45,27 +58,30 @@ img{
 <div id="app" v-cloak>
 <div class="wrap">
 <div class="menu">
-<ul v-for="group in categories">
-  <li v-for="cat in group">
-    <label v-bind:for="cat.label"><input
-      type="checkbox"
-      v-model="cat.flag"
-      v-bind:id="cat.label"
-      v-on:change="sort"
-    >{{cat.label}}
-    </label>
-  </li>
-</ul>
+<div v-for="group in categories">
+  <p>{{group.label}}</p>
+  <ul>
+    <li v-for="cat in group.arr">
+      <label v-bind:for="cat.label"><input
+        type="checkbox"
+        v-model="cat.flag"
+        v-bind:id="cat.label"
+        v-on:change="sort"
+      >{{cat.label}}
+      </label>
+    </li>
+  </ul>
+</div>
 </div><!-- /  .menu -->
-<div class="boxWrap">
-<div class="box" v-for="box in show(contents)">
+<transition-group name="item" tag="div" class="boxWrap">
+<div class="box  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
   <p class="head">{{box.head}}</p>
   <p class="txt">{{box.text}}</p>
   <ul class="tag">
     <li v-for="cat in box.cat">{{cat}}</li>
   </ul>
 </div><!-- /  .box -->
-</div><!-- /  .boxWrap -->
+</transition-group><!-- /  .boxWrap -->
 </div><!-- /  .wrap -->
 
 <pre>{{$data}}</pre>
@@ -78,26 +94,34 @@ img{
 var app = new Vue({
 	el:'#app',
   data:{
+    cond:'',
+    word:'',
     categories:{
       group1:{
-        cat1_1:{
-          label:'cat1_1',
-          flag:false
-        },
-        cat1_2:{
-          label:'cat1_2',
-          flag:false
-        },
+        label:'グループ１',
+        arr:{
+          cat1_1:{
+            label:'cat1_1',
+            flag:false
+          },
+          cat1_2:{
+            label:'cat1_2',
+            flag:false
+          }
+        }
       },
       group2:{
-        cat2_1:{
-          label:'cat2_1',
-          flag:false
-        },
-        cat2_2:{
-          label:'cat2_2',
-          flag:false
-        },
+        label:'グループ２',
+        arr:{
+          cat2_1:{
+            label:'cat2_1',
+            flag:false
+          },
+          cat2_2:{
+            label:'cat2_2',
+            flag:false
+          }
+        }
       }
     },
     contents:[
@@ -106,24 +130,28 @@ var app = new Vue({
         cat:['cat1_1','cat1_2'],
         head:'タイトル1',
         text:'あああ',
+        showFlag:true
       },
       {
         id:1,
         cat:['cat2_2'],
         head:'タイトル2',
         text:'いいい',
+        showFlag:true
       },
       {
         id:2,
         cat:['cat1_2','cat2_2'],
         head:'タイトル3',
         text:'ううう',
+        showFlag:true
       },
       {
         id:3,
         cat:['cat2_1'],
         head:'タイトル4',
         text:'えええ',
+        showFlag:true
       }
     ],
     showCat:[]
@@ -136,9 +164,9 @@ var app = new Vue({
       var showCat=[]
       for(group in this.categories){
         var groupArr = []
-        for(cat in this.categories[group]){
-          if(this.categories[group][cat].flag === true){
-            groupArr.push(this.categories[group][cat].label)
+        for(cat in this.categories[group].arr){
+          if(this.categories[group].arr[cat].flag === true){
+            groupArr.push(this.categories[group].arr[cat].label)
           }
         }
         if(groupArr.length){
@@ -149,29 +177,29 @@ var app = new Vue({
       if(showCat.length){
         this.showCat.push(showCat)
       }
+      this.checkJudge()
     },
-    show:function(contents){
-      var showObj = []
-      var　cond = '';
+    checkJudge:function(){
+      this.cond = ''
       for(group in this.showCat){
         for(cat in this.showCat[group]){
-          //console.log(this.showCat[group][cat])
-          cond += '&&'+this.showCat[group][cat]
-          //this.contents.filter()
+          this.cond += '&&'+this.showCat[group][cat]
         }
       }
-      cond = cond.replace(/&&/g,')&&(?=').replace(',','|').slice(3);
-      if(cond !== '') cond += ')'
-      console.log(cond)
-      for(item in contents){
-        if(contents[item].cat.toString().match(cond)){
-          showObj.push(contents[item])
+      this.cond = this.cond.replace(/&&/g,')(?=.*').replace(/,/g,'|.*').slice(1)
+      if(this.cond !== '') this.cond += ')'
+      console.log(this.cond)
+      for(item in this.contents){
+        if(this.contents[item].cat.toString().match(this.cond)){
+          this.contents[item].showFlag = true
+        }else{
+          this.contents[item].showFlag = false
         }
       }
-      return showObj
     }
   }
 })
 </script>
+<script src="heightLine.js"></script>
 </body>
 </html>
