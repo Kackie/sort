@@ -6,6 +6,54 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
 <style>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 [v-cloak]{
   display: none;
 }
@@ -14,7 +62,7 @@ img{
 }
 .wrap{
   display: flex;
-  width: 1080px;
+  width: 1000px;
   margin: 0 auto;
 }
 .menu{
@@ -24,18 +72,26 @@ img{
   width: 80%;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .boxWrap .box{
-  width: calc(25% - 20px);
+  width: 180px;
   border: 1px solid #000;
   box-sizing: border-box;
   padding: 10px;
+  transition: all 0.5s;
+  margin: 0 10px 20px;
 }
-.boxWrap .box:not(:nth-child(4n+1)){
-  margin-left: 20px;
+.item-enter-active {
+  transition: all 1s;
 }
-.boxWrap .box:nth-child(n+5){
-  margin-top: 20px;
+.item-leave-active {
+  position: absolute;
+  transition: all 0.3s;
+}
+.item-enter, .item-leave-to{
+  transform: scale(0);
+  opacity: 0;
 }
 
 </style>
@@ -45,100 +101,110 @@ img{
 <div id="app" v-cloak>
 <div class="wrap">
 <div class="menu">
-<ul v-for="group in categories">
-  <li v-for="cat in group">
-    <label v-bind:for="cat.label"><input
-      type="checkbox"
-      v-model="cat.flag"
-      v-bind:id="cat.label"
-      v-on:change="sort"
-    >{{cat.label}}
-    </label>
-  </li>
-</ul>
+<div v-for="group in categories">
+  <p>{{group.label}}</p>
+  <ul>
+    <li v-for="cat in group.arr">
+      <label v-bind:for="cat.label"><input
+        type="checkbox"
+        v-model="cat.flag"
+        v-bind:id="cat.label"
+        v-on:change="sort"
+      >{{cat.label}}
+      </label>
+    </li>
+  </ul>
+</div>
 </div><!-- /  .menu -->
-<div class="boxWrap">
-<div class="box" v-for="box in show(contents)">
-  <p class="head">{{box.head}}</p>
+<transition-group name="item" tag="div" class="boxWrap">
+<div class="box  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
+  <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
   <p class="txt">{{box.text}}</p>
   <ul class="tag">
     <li v-for="cat in box.cat">{{cat}}</li>
   </ul>
 </div><!-- /  .box -->
-</div><!-- /  .boxWrap -->
+</transition-group><!-- /  .boxWrap -->
 </div><!-- /  .wrap -->
 
 <pre>{{$data}}</pre>
 </div><!-- /#app -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 
 <script>
 var app = new Vue({
 	el:'#app',
   data:{
+    dataFile:'data.json',
+    cond:'',
+    word:'',
     categories:{
       group1:{
-        cat1_1:{
-          label:'cat1_1',
-          flag:false
-        },
-        cat1_2:{
-          label:'cat1_2',
-          flag:false
-        },
+        label:'ジャンル',
+        arr:{
+          cat1_1:{
+            label:'和食',
+            flag:false
+          },
+          cat1_2:{
+            label:'洋食',
+            flag:false
+          },
+          cat1_3:{
+            label:'中華',
+            flag:false
+          },
+          cat1_4:{
+            label:'イタリアン',
+            flag:false
+          }
+        }
       },
       group2:{
-        cat2_1:{
-          label:'cat2_1',
-          flag:false
-        },
-        cat2_2:{
-          label:'cat2_2',
-          flag:false
-        },
+        label:'メイン',
+        arr:{
+          cat2_1:{
+            label:'肉',
+            flag:false
+          },
+          cat2_2:{
+            label:'魚',
+            flag:false
+          }
+        }
       }
     },
-    contents:[
-      {
-        id:0,
-        cat:['cat1_1','cat1_2'],
-        head:'タイトル1',
-        text:'あああ',
-      },
-      {
-        id:1,
-        cat:['cat2_2'],
-        head:'タイトル2',
-        text:'いいい',
-      },
-      {
-        id:2,
-        cat:['cat1_2','cat2_2'],
-        head:'タイトル3',
-        text:'ううう',
-      },
-      {
-        id:3,
-        cat:['cat2_1'],
-        head:'タイトル4',
-        text:'えええ',
-      }
-    ],
+    contents:[],
     showCat:[]
   },
+  created:function(){
+    this.getData()
+  },
   mounted:function(){
-    this.sort()
   },
   methods:{
+    getData:function(){
+      let self = this
+      axios.get(self.dataFile)
+        .then(function(response){
+          console.log(response.data)
+          self.contents = response.data
+          self.sort()
+        })
+        .catch(function(err){
+          console.log('ERROR.')
+        })
+    },
     sort:function(){
       var showCat=[]
       for(group in this.categories){
         var groupArr = []
-        for(cat in this.categories[group]){
-          if(this.categories[group][cat].flag === true){
-            groupArr.push(this.categories[group][cat].label)
+        for(cat in this.categories[group].arr){
+          if(this.categories[group].arr[cat].flag === true){
+            groupArr.push(this.categories[group].arr[cat].label)
           }
         }
         if(groupArr.length){
@@ -149,29 +215,28 @@ var app = new Vue({
       if(showCat.length){
         this.showCat.push(showCat)
       }
+      this.checkJudge()
     },
-    show:function(contents){
-      var showObj = []
-      var　cond = '';
+    checkJudge:function(){
+      this.cond = ''
       for(group in this.showCat){
         for(cat in this.showCat[group]){
-          //console.log(this.showCat[group][cat])
-          cond += '&&'+this.showCat[group][cat]
-          //this.contents.filter()
+          this.cond += '&&'+this.showCat[group][cat]
         }
       }
-      cond = cond.replace(/&&/g,')&&(?=').replace(',','|').slice(3);
-      if(cond !== '') cond += ')'
-      console.log(cond)
-      for(item in contents){
-        if(contents[item].cat.toString().match(cond)){
-          showObj.push(contents[item])
+      this.cond = this.cond.replace(/&&/g,')(?=.*').replace(/,/g,'|.*').slice(1)
+      if(this.cond !== '') this.cond += ')'
+      for(item in this.contents){
+        if(this.contents[item].cat.toString().match(this.cond)){
+          this.contents[item].showFlag = true
+        }else{
+          this.contents[item].showFlag = false
         }
       }
-      return showObj
     }
   }
 })
 </script>
+<script src="heightLine.js"></script>
 </body>
 </html>
