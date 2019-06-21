@@ -190,7 +190,6 @@ var app = new Vue({
       let self = this
       axios.get(self.dataFile)
         .then(function(response){
-          console.log(response.data)
           self.contents = response.data
           self.sort()
         })
