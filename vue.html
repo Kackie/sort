@@ -14,7 +14,7 @@ img{
 }
 .wrap{
   display: flex;
-  width: 980px;
+  width: 1000px;
   margin: 0 auto;
 }
 .menu{
@@ -26,19 +26,13 @@ img{
   flex-wrap: wrap;
 }
 .boxWrap .box{
-  width: 181px;
+  width: 180px;
   border: 1px solid #000;
   box-sizing: border-box;
   padding: 10px;
   transition: all 0.5s;
+  margin: 0 10px 20px;
 }
-.boxWrap .box:not(:nth-child(4n+1)){
-  margin-left: 20px;
-}
-.boxWrap .box:nth-child(n+5){
-  margin-top: 20px;
-}
-
 .item-enter-active {
   transition: all 1s;
 }
@@ -75,7 +69,7 @@ img{
 </div><!-- /  .menu -->
 <transition-group name="item" tag="div" class="boxWrap">
 <div class="box  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
-  <p class="head">{{box.head}}</p>
+  <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
   <p class="txt">{{box.text}}</p>
   <ul class="tag">
     <li v-for="cat in box.cat">{{cat}}</li>
@@ -88,78 +82,73 @@ img{
 </div><!-- /#app -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 
 <script>
 var app = new Vue({
 	el:'#app',
   data:{
+    dataFile:'data.json',
     cond:'',
     word:'',
     categories:{
       group1:{
-        label:'グループ１',
+        label:'ジャンル',
         arr:{
           cat1_1:{
-            label:'cat1_1',
+            label:'和食',
             flag:false
           },
           cat1_2:{
-            label:'cat1_2',
+            label:'洋食',
+            flag:false
+          },
+          cat1_3:{
+            label:'中華',
+            flag:false
+          },
+          cat1_4:{
+            label:'イタリアン',
             flag:false
           }
         }
       },
       group2:{
-        label:'グループ２',
+        label:'メイン',
         arr:{
           cat2_1:{
-            label:'cat2_1',
+            label:'肉',
             flag:false
           },
           cat2_2:{
-            label:'cat2_2',
+            label:'魚',
             flag:false
           }
         }
       }
     },
-    contents:[
-      {
-        id:0,
-        cat:['cat1_1','cat1_2'],
-        head:'タイトル1',
-        text:'あああ',
-        showFlag:true
-      },
-      {
-        id:1,
-        cat:['cat2_2'],
-        head:'タイトル2',
-        text:'いいい',
-        showFlag:true
-      },
-      {
-        id:2,
-        cat:['cat1_2','cat2_2'],
-        head:'タイトル3',
-        text:'ううう',
-        showFlag:true
-      },
-      {
-        id:3,
-        cat:['cat2_1'],
-        head:'タイトル4',
-        text:'えええ',
-        showFlag:true
-      }
-    ],
+    contents:[],
     showCat:[]
   },
+  created:function(){
+    this.getData()
+  },
   mounted:function(){
-    this.sort()
   },
   methods:{
+    getData:function(){
+      let self = this
+      axios.get(self.dataFile)
+        .then(function(response){
+          console.log(response.data)
+          self.contents = response.data
+          self.sort()
+        })
+        .catch(function(err){
+          console.log('ERROR.')
+        })
+    },
     sort:function(){
       var showCat=[]
       for(group in this.categories){
@@ -188,7 +177,6 @@ var app = new Vue({
       }
       this.cond = this.cond.replace(/&&/g,')(?=.*').replace(/,/g,'|.*').slice(1)
       if(this.cond !== '') this.cond += ')'
-      console.log(this.cond)
       for(item in this.contents){
         if(this.contents[item].cat.toString().match(this.cond)){
           this.contents[item].showFlag = true
