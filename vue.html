@@ -37,7 +37,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+	line-height: 1.2;
 }
 ol, ul {
 	list-style: none;
@@ -54,6 +54,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+html{
+  font-size: 10px;
+}
+body{
+  font-size: 1.6rem;
+}
 [v-cloak]{
   display: none;
 }
@@ -62,36 +68,68 @@ img{
 }
 .wrap{
   display: flex;
+  align-items: flex-start;
   width: 1000px;
-  margin: 0 auto;
+  margin: 30px auto;
 }
 .menu{
-  width: 20%;
+  width: 18%;
+  margin-right: 2%;
+}
+.menu .group+.group{
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dotted #555;
+}
+.menu .group .label{
+  margin-bottom: 5px;
+}
+.menu .group ul{
+  margin-left: 5px;
 }
 .boxWrap{
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  position: relative;
 }
-.boxWrap .box{
+.boxWrap .col{
   width: 180px;
   border: 1px solid #000;
   box-sizing: border-box;
   padding: 10px;
-  transition: all 0.5s;
   margin: 0 10px 20px;
+  font-size: 1.6rem;
+  background: #fff;
+}
+.boxWrap .col .head{
+  margin-bottom: 10px;
+}
+.boxWrap .col .txt{
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.boxWrap .col .tag{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -5px;
+  margin-right: -5px;
+  font-size: 1.2rem;
+}
+.boxWrap .col .tag li{
+  margin: 0 5px 5px;
 }
 .item-enter-active {
-  transition: all 1s;
 }
 .item-leave-active {
   position: absolute;
-  transition: all 0.3s;
 }
 .item-enter, .item-leave-to{
-  transform: scale(0);
   opacity: 0;
+}
+.item-move{
+  transition: all 0.5s;
+  z-index: -1;
 }
 
 </style>
@@ -99,10 +137,10 @@ img{
 <body>
 
 <div id="app" v-cloak>
-<div class="wrap">
+<div class="wrap" v-bind:class="(list)?'list':'box'">
 <div class="menu">
-<div v-for="group in categories">
-  <p>{{group.label}}</p>
+<div v-for="group in categories" class="group">
+  <p v-if="group.label" class="label">{{group.label}}</p>
   <ul>
     <li v-for="cat in group.arr">
       <label v-bind:for="cat.label"><input
@@ -117,13 +155,13 @@ img{
 </div>
 </div><!-- /  .menu -->
 <transition-group name="item" tag="div" class="boxWrap">
-<div class="box  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
+<div class="col  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
   <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
-  <p class="txt">{{box.text}}</p>
+  <p class="txt" v-if="box.text">{{box.text}}</p>
   <ul class="tag">
     <li v-for="cat in box.cat">{{cat}}</li>
   </ul>
-</div><!-- /  .box -->
+</div><!-- /  .col -->
 </transition-group><!-- /  .boxWrap -->
 </div><!-- /  .wrap -->
 
@@ -160,6 +198,10 @@ var app = new Vue({
           cat1_4:{
             label:'イタリアン',
             flag:false
+          },
+          cat1_5:{
+            label:'ラーメン',
+            flag:false
           }
         }
       },
@@ -174,6 +216,35 @@ var app = new Vue({
             label:'魚',
             flag:false
           }
+        }
+      },
+      group3:{
+        label:'予算',
+        arr:{
+          cat3_1:{
+            label:'500円以下',
+            flag:false
+          },
+          cat3_2:{
+            label:'1000円以下',
+            flag:false
+          }
+        }
+      },
+      group4:{
+        arr:{
+          cat4_1:{
+            label:'近い',
+            flag:false
+          },
+        }
+      },
+      group5:{
+        arr:{
+          cat5_1:{
+            label:'ドリンクサービス',
+            flag:false
+          },
         }
       }
     },
