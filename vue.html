@@ -118,6 +118,7 @@ img{
   flex-wrap: wrap;
   margin-left: -5px;
   margin-right: -5px;
+  margin-bottom: -5px;
   font-size: 1.2rem;
 }
 .boxWrap .col .tag li{
@@ -133,10 +134,35 @@ img{
 }
 .item-move{
   transition: all 0.5s;
-  z-index: -1;
   will-change:transform;
 }
-
+@media (max-width: 768px){
+.wrap{
+  width: 100%;
+  margin: 10px auto;
+}
+.menu{
+  display: none;
+}
+.boxWrap{
+  width: calc(100% - 10px);
+  margin: 0 auto;
+}
+.boxWrap .col{
+  margin: 0 5px 15px;
+  width: calc((100% - 20px)/2);
+  font-size: 1.4rem;
+}
+.boxWrap .col .time{
+  font-size: 1rem;
+}
+.boxWrap .col .txt{
+  font-size: 1.2rem;
+}
+.boxWrap .col .tag{
+  font-size: 1.0rem;
+}
+}
 </style>
 </head>
 <body>
