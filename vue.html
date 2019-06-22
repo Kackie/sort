@@ -84,7 +84,7 @@ img{
 .menu .group .label{
   margin-bottom: 5px;
 }
-.menu .group ul{
+.menu .group .inner{
   margin-left: 5px;
 }
 .boxWrap{
@@ -103,6 +103,10 @@ img{
   background: #fff;
 }
 .boxWrap .col .head{
+  margin-bottom: 10px;
+}
+.boxWrap .col .time{
+  font-size: 1.2rem;
   margin-bottom: 10px;
 }
 .boxWrap .col .txt{
@@ -130,6 +134,7 @@ img{
 .item-move{
   transition: all 0.5s;
   z-index: -1;
+  will-change:transform;
 }
 
 </style>
@@ -137,26 +142,35 @@ img{
 <body>
 
 <div id="app" v-cloak>
-<div class="wrap" v-bind:class="(list)?'list':'box'">
+<div class="wrap">
 <div class="menu">
+<div class="group">
+  <p class="label">フリーワード検索</p>
+  <div class="inner">
+    <input type="text" v-model.trim="word" v-on:change="textSort">
+  </div>
+</div>
 <div v-for="group in categories" class="group">
   <p v-if="group.label" class="label">{{group.label}}</p>
-  <ul>
-    <li v-for="cat in group.arr">
-      <label v-bind:for="cat.label"><input
-        type="checkbox"
-        v-model="cat.flag"
-        v-bind:id="cat.label"
-        v-on:change="sort"
-      >{{cat.label}}
-      </label>
-    </li>
-  </ul>
+  <div class="inner">
+    <ul>
+      <li v-for="cat in group.arr">
+        <label v-bind:for="cat.label"><input
+          type="checkbox"
+          v-model="cat.flag"
+          v-bind:id="cat.label"
+          v-on:change="checkUpdate"
+        >{{cat.label}}
+        </label>
+      </li>
+    </ul>
+  </div>
 </div>
 </div><!-- /  .menu -->
 <transition-group name="item" tag="div" class="boxWrap">
-<div class="col  heightLine" v-for="box in contents" v-show="box.showFlag" v-bind:key="box.id">
+<div class="col  heightLine" v-for="box in contents" v-show="box.checkFlag && box.wordFlag" v-bind:key="box.id">
   <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
+  <p class="time"><time class="open">{{timeTxt(box.open,':')}}</time>~<time class="open">{{timeTxt(box.close,':')}}</time></p>
   <p class="txt" v-if="box.text">{{box.text}}</p>
   <ul class="tag">
     <li v-for="cat in box.cat">{{cat}}</li>
@@ -179,6 +193,8 @@ var app = new Vue({
     dataFile:'data.json',
     cond:'',
     word:'',
+    param:'',
+    time:1100,
     categories:{
       group1:{
         label:'ジャンル',
@@ -238,14 +254,6 @@ var app = new Vue({
             flag:false
           },
         }
-      },
-      group5:{
-        arr:{
-          cat5_1:{
-            label:'ドリンクサービス',
-            flag:false
-          },
-        }
       }
     },
     contents:[],
@@ -256,19 +264,37 @@ var app = new Vue({
   },
   mounted:function(){
   },
+  computed:{
+    wordMatch:function(){
+      return '(?=.*'+this.word+')'
+    }
+  },
   methods:{
+    timeTxt:function(num,str){
+      num = num+''
+      return num.substr(0,2) + str + num.substr(2,2)
+    },
     getData:function(){
       let self = this
       axios.get(self.dataFile)
         .then(function(response){
           self.contents = response.data
-          self.sort()
+          //self.urlReflect()
+          self.checkUpdate()
+          self.textSort()
         })
         .catch(function(err){
           console.log('ERROR.')
         })
     },
-    sort:function(){
+    urlReflect:function(){
+      if(location.search){
+        if(location.search.match(/.*?cond=/)){
+          console.log(location.search.match(/cond=.*(?=\?)/).toString().replace('cond=',''))
+        }
+      }
+    },
+    checkUpdate:function(){
       var showCat=[]
       for(group in this.categories){
         var groupArr = []
@@ -287,6 +313,13 @@ var app = new Vue({
       }
       this.checkJudge()
     },
+    textJudge:function(text){
+      if(text.match(this.wordMatch)){
+        return true
+      }else{
+        return false
+      }
+    },
     checkJudge:function(){
       this.cond = ''
       for(group in this.showCat){
@@ -296,17 +329,53 @@ var app = new Vue({
       }
       this.cond = this.cond.replace(/&&/g,')(?=.*').replace(/,/g,'|.*').slice(1)
       if(this.cond !== '') this.cond += ')'
+      this.checkSort()
+    },
+    checkSort:function(){
       for(item in this.contents){
         if(this.contents[item].cat.toString().match(this.cond)){
-          this.contents[item].showFlag = true
+          this.contents[item].checkFlag = true
         }else{
-          this.contents[item].showFlag = false
+          this.contents[item].checkFlag = false
         }
+      }
+      //this.updateParam()
+    },
+    textSort:function(){
+      if(this.word !== ''){
+        for(item in this.contents){
+          for(text in this.contents[item]){
+            if(isNaN(this.contents[item][text])){
+              if(this.textJudge(this.contents[item][text].toString())){
+                this.contents[item].wordFlag = true
+                break
+              }else{
+                this.contents[item].wordFlag = false
+              }
+            }
+          }
+        }
+      }else{
+        for(item in this.contents){
+          this.contents[item].wordFlag = true
+        }
+      }
+      //this.updateParam()
+    },
+    updateParam:function(){
+      var param = ''
+      if(this.cond) param += '?cond=' + this.cond
+      if(this.word) param += '?word=' + this.word
+      console.log(param)
+      if(param !== ''){
+        history.pushState(null,null,param)
+      }else{
+        var defHref = location.href.replace(/\?.*$/,"");
+        history.pushState(null,null,defHref)
       }
     }
   }
 })
 </script>
-<script src="heightLine.js"></script>
 </body>
 </html>
