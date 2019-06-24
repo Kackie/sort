@@ -298,7 +298,15 @@ var app = new Vue({
   methods:{
     timeTxt:function(num,str){
       num = num+''
-      return num.substr(0,2) + str + num.substr(2,2)
+      var num1 = parseInt(num.substr(0,2))
+          num2 = num.substr(2,2)
+          prefix = ''
+      if(num1>23){
+        num1 = num1 -24
+        prefix = (num1>0)?'翌0':'0'
+        return prefix + num1 + str + num2
+      }
+      return num1 + str + num2
     },
     getData:function(){
       let self = this
