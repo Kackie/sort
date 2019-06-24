@@ -1,0 +1,258 @@
+@charset "utf-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1.2;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+html{
+  font-size: 10px;
+}
+body{
+  font-size: 1.6rem;
+}
+body, button, input, select, textarea{
+  font-family:"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ",Meiryo,sans-serif
+}
+[v-cloak]{
+  display: none;
+}
+input[type=text]{
+  font-size: 16px;
+}
+#app pre{
+  max-width: 100%;
+  overflow: auto;
+  display: none;
+}
+img{
+  vertical-align: top;
+}
+.wrap{
+  display: flex;
+  align-items: flex-start;
+  width: 1000px;
+  margin: 30px auto;
+}
+.menu{
+  width: 18%;
+  margin-right: 2%;
+}
+.menuOpen{
+  display: none;
+}
+.menu .group+.group{
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dotted #555;
+}
+.menu .group .label{
+  margin-bottom: 5px;
+}
+.menu .group .inner{
+  margin-left: 5px;
+}
+.menu .group .inner input[type=text]{
+  width: 100%;
+  box-sizing: border-box;
+}
+.boxWrap{
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+.boxWrap .col{
+  width: 180px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0 10px 20px;
+  font-size: 1.6rem;
+  background: #fff;
+}
+.boxWrap .col .head{
+  margin-bottom: 10px;
+}
+.boxWrap .col .time{
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.boxWrap .col .txt{
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.boxWrap .col .tag{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-bottom: -5px;
+  font-size: 1.2rem;
+}
+.boxWrap .col .tag li{
+  margin: 0 5px 5px;
+}
+.item-enter-active {
+}
+.item-leave-active {
+  position: absolute;
+}
+.item-enter, .item-leave-to{
+  opacity: 0;
+}
+.item-move{
+  transition: all 0.5s;
+  will-change:transform;
+}
+@media (max-width: 768px){
+.wrap{
+  width: 100%;
+  margin: 10px auto;
+}
+.menuOpen{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 2;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.menuOpen.is_active{
+  transform: translateX(-90%);
+}
+.menuOpen button{
+  pointer-events: auto;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 10px;
+  letter-spacing: 0.1em;
+  vertical-align: bottom;
+  font-size: 1.4rem;
+}
+.menuOpen span{
+  display: inline-block;
+  width: 1em;
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+.menu{
+  position: fixed;
+  overflow: auto;
+  width: 90%;
+  z-index: 2;
+  top: 20px;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: auto 0;
+  transform:translateX(100%);
+  transition: 0.3s;
+}
+.menu.is_active{
+  transform:translateX(0);
+}
+.menu .group+.group{
+  border-color: #ccc;
+}
+.menu .group .inner ul{
+  display: flex;
+  flex-wrap: wrap;
+}
+.menu .group .inner ul li{
+  width: 50%;
+}
+.menu .group .inner ul li:nth-child(n+3){
+  margin-top: 10px;
+}
+.boxWrap{
+  width: calc(100% - 10px);
+  margin: 0 auto;
+}
+.boxWrap .col{
+  margin: 0 5px 15px;
+  width: calc((100% - 20px)/2);
+  font-size: 1.4rem;
+}
+.boxWrap .col .time{
+  font-size: 1rem;
+}
+.boxWrap .col .txt{
+  font-size: 1.2rem;
+}
+.boxWrap .col .tag{
+  font-size: 1.0rem;
+}
+.menuBg{
+  background: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  opacity: 0;
+}
+.menuBg.is_active{
+  opacity: 1;
+}
+}
