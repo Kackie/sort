@@ -20,7 +20,7 @@
         "id":2,
         "head":"ちゃん豚",
         "url":"https://tabelog.com/tokyo/A1304/A130401/13164085/",
-        "text":"韓国料理",
+        "text":"韓国",
         "cat":["500円以下","日替わり","近い"],
         "open":1130,
         "close":1530
@@ -351,5 +351,22 @@
         "cat":["ラーメン","1000円以下"],
         "open":1100,
         "close":2400
+    },
+    {
+        "id":42,
+        "head":"kawara CAFE＆DINING",
+        "url":"https://tabelog.com/tokyo/A1304/A130401/13057910/",
+        "cat":["和食","肉","魚"],
+        "open":1145,
+        "close":1700
+    },
+    {
+        "id":43,
+        "head":"韓花",
+        "url":"https://tabelog.com/tokyo/A1304/A130401/13023141/",
+        "text":"韓国",
+        "cat":["肉"],
+        "open":1130,
+        "close":1430
     }
 ]
