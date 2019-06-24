@@ -173,7 +173,7 @@ img{
 <div class="group">
   <p class="label">フリーワード検索</p>
   <div class="inner">
-    <input type="text" v-model.trim="word" v-on:change="textSort">
+    <input type="text" v-model.trim="word" v-on:input="textSort">
   </div>
 </div>
 <div v-for="group in categories" class="group">
