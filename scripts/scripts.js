@@ -98,6 +98,7 @@ var app = new Vue({
       let self = this
       axios.get(self.dataFile)
         .then(function(response){
+          document.getElementById('loading').remove()
           self.contents = response.data
           //self.urlReflect()
           self.checkUpdate()
