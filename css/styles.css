@@ -99,6 +99,22 @@ img{
   width: 100%;
   box-sizing: border-box;
 }
+.inputWrap{
+  display: inline-block;
+  position: relative;
+}
+.inputWrap .deleteBtn{
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+}
 .boxWrap{
   width: 80%;
   display: flex;
