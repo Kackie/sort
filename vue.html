@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>ランチソート</title>
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -16,7 +17,10 @@
 <div class="group">
   <p class="label">フリーワード検索</p>
   <div class="inner">
-    <input type="text" v-model.trim="word" v-on:input="textSort">
+    <div class="inputWrap">
+      <input type="text" v-model.trim="word" v-on:input="textSort" v-on:keyup.esc="word='';textSort()">
+      <button class="deleteBtn" v-show="word !==''" v-on:click="word='';textSort()"><i class="fas fa-times"></i></button>
+    </div><!-- /  .inputWrap -->
   </div>
 </div>
 <div v-for="group in categories" class="group">
@@ -36,6 +40,7 @@
   </div>
 </div>
 </div><!-- /  .menu -->
+<div id="loading"><span class="txt">Loading ...</span><span class="icon"></span></div>
 <transition-group name="item" tag="div" class="boxWrap">
 <div class="col  heightLine" v-for="box in contents" v-show="box.checkFlag && box.wordFlag" v-bind:key="box.id">
   <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
