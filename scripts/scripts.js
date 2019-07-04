@@ -4,9 +4,9 @@ var app = new Vue({
     dataFile:'data.json',
     cond:'',
     word:'',
+    time:'12:30',
     param:'',
     menuFlag:false,
-    time:1100,
     categories:{
       group1:{
         label:'ジャンル',
@@ -79,6 +79,9 @@ var app = new Vue({
   computed:{
     wordMatch:function(){
       return '(?=.*'+this.word+')'
+    },
+    timeNum:function(){
+    	return this.time.replace(':','')
     }
   },
   methods:{
@@ -103,6 +106,7 @@ var app = new Vue({
           //self.urlReflect()
           self.checkUpdate()
           self.textSort()
+          self.timeSort()
         })
         .catch(function(err){
           console.log('ERROR.')
@@ -111,7 +115,7 @@ var app = new Vue({
     urlReflect:function(){
       if(location.search){
         if(location.search.match(/.*?cond=/)){
-          console.log(location.search.match(/cond=.*(?=\?)/).toString().replace('cond=',''))
+          console.log(location.search.match(/cond=(.*)(?=,)/).toString().replace('cond=',''))
         }
       }
     },
@@ -183,10 +187,26 @@ var app = new Vue({
       }
       //this.updateParam()
     },
+    timeSort:function(){
+      if(this.time !== ''){
+        for(item in this.contents){
+          if(this.contents[item].open <= this.timeNum && this.contents[item].close >= this.timeNum){
+            this.contents[item].timeFlag = true
+          }else{
+            this.contents[item].timeFlag = false
+          }
+        }
+      }else{
+        for(item in this.contents){
+          this.contents[item].timeFlag = true
+        }
+      }
+    },
     updateParam:function(){
       var param = ''
-      if(this.cond) param += '?cond=' + this.cond
-      if(this.word) param += '?word=' + this.word
+      if(this.cond) param += '?cond=' + this.cond +','
+      if(this.word) param += '?word=' + this.word +','
+      if(this.time) param += '?time=' + this.time
       console.log(param)
       if(param !== ''){
         history.pushState(null,null,param)

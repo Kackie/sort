@@ -39,10 +39,21 @@
     </ul>
   </div>
 </div>
+<div class="group">
+  <p class="label">時間</p>
+  <div class="inner">
+    <input type="time" step="900" v-model:value="time" v-on:input="timeSort">
+  </div>
+</div>
 </div><!-- /  .menu -->
 <div id="loading"><span class="txt">Loading ...</span><span class="icon"></span></div>
 <transition-group name="item" tag="div" class="boxWrap">
-<div class="col  heightLine" v-for="box in contents" v-show="box.checkFlag && box.wordFlag" v-bind:key="box.id">
+<div
+  class="col"
+  v-for="box in contents"
+  v-show="box.checkFlag && box.wordFlag && box.timeFlag"
+  v-bind:key="box.id"
+>
   <p class="head"><a v-bind:href="box.url" target="_blank">{{box.head}}</a></p>
   <p class="time"><time class="open">{{timeTxt(box.open,':')}}</time>~<time class="open">{{timeTxt(box.close,':')}}</time></p>
   <p class="txt" v-if="box.text">{{box.text}}</p>
