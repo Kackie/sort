@@ -202,6 +202,12 @@ var app = new Vue({
         }
       }
     },
+    nowTime:function(){
+      var now = new Date()
+      var nowTime = now.getHours() +  ':' + now.getMinutes()
+      this.time = nowTime
+      this.timeSort()
+    },
     updateParam:function(){
       var param = ''
       if(this.cond) param += '?cond=' + this.cond +','
