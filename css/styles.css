@@ -60,7 +60,7 @@ body, button, input, select, textarea{
 [v-cloak]{
   display: none;
 }
-input[type=text]{
+input[type=text],input[type=time]{
   font-size: 16px;
 }
 #app pre{
