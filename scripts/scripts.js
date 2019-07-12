@@ -143,7 +143,8 @@ var app = new Vue({
       this.checkJudge()
     },
     textJudge:function(text){
-      if(text.match(this.wordMatch)){
+      var pattern = new RegExp(this.wordMatch,'i')
+      if(text.match(pattern)){
         return true
       }else{
         return false
