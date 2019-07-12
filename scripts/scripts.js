@@ -103,6 +103,7 @@ var app = new Vue({
         .then(function(response){
           document.getElementById('loading').remove()
           self.contents = response.data
+		  self.sortBy()
           //self.urlReflect()
           self.checkUpdate()
           self.textSort()
@@ -111,6 +112,9 @@ var app = new Vue({
         .catch(function(err){
           console.log('ERROR.')
         })
+    },
+	sortBy:function(){
+      this.contents = _.sortBy(this.contents,'head')
     },
     urlReflect:function(){
       if(location.search){
@@ -203,8 +207,12 @@ var app = new Vue({
       }
     },
     nowTime:function(){
-      var now = new Date()
-      var nowTime = now.getHours() +  ':' + now.getMinutes()
+      var now = new Date(),
+          nowH = ''+now.getHours(),
+          nowM = ''+now.getMinutes()
+      if(nowH.length<2) nowH.length = '0' + nowH.length
+      if(nowM.length<2) nowM.length = '0' + nowM.length
+      var nowTime = nowH +  ':' + nowM
       this.time = nowTime
       this.timeSort()
     },
