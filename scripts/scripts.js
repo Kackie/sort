@@ -211,8 +211,8 @@ var app = new Vue({
       var now = new Date(),
           nowH = ''+now.getHours(),
           nowM = ''+now.getMinutes()
-      if(nowH.length<2) nowH.length = '0' + nowH.length
-      if(nowM.length<2) nowM.length = '0' + nowM.length
+      if(nowH.length<2) nowH = '0' + nowH
+      if(nowM.length<2) nowM = '0' + nowM
       var nowTime = nowH +  ':' + nowM
       this.time = nowTime
       this.timeSort()
