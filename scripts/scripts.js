@@ -143,7 +143,8 @@ var app = new Vue({
       this.checkJudge()
     },
     textJudge:function(text){
-      if(text.match(this.wordMatch)){
+      var pattern = new RegExp(this.wordMatch,'i')
+      if(text.match(pattern)){
         return true
       }else{
         return false
@@ -210,8 +211,8 @@ var app = new Vue({
       var now = new Date(),
           nowH = ''+now.getHours(),
           nowM = ''+now.getMinutes()
-      if(nowH.length<2) nowH.length = '0' + nowH.length
-      if(nowM.length<2) nowM.length = '0' + nowM.length
+      if(nowH.length<2) nowH = '0' + nowH
+      if(nowM.length<2) nowM = '0' + nowM
       var nowTime = nowH +  ':' + nowM
       this.time = nowTime
       this.timeSort()
