@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+.newsList{
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+}
+.newsList li{
+	width: 33%;
+	margin-bottom: 20px;
+	display: none;
+}
+.newsList li:after{
+	content:attr(data-year) ' ' attr(data-cat);
+}
+
+#pager{
+	list-style-type: none;
+	display: flex;
+	justify-content: center;
+}
+#pager button.current{
+	font-weight: bold;
+	border-color: #000;
+	pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="selectWrap">
+<select id="yearSelect">
+<option value="">年を選択</option>
+<option value="2019">2019</option>
+<option value="2018">2018</option>
+</select>
+
+<select id="catSelect">
+<option value="">種別を選択</option>
+<option value="cat1">cat1</option>
+<option value="cat2">cat2</option>
+<option value="cat3">cat3</option>
+</select>
+</div><!-- /  .selectWrap -->
+
+<ul class="newsList">
+	<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2019" data-cat="cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat3,cat2"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2,cat3"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat1"></li>
+<li class="col showFlag" data-year="2018" data-cat="cat2"></li>
+</ul><!-- /  .newsList -->
+
+<ul id="pager"></ul>
+
+<script
+src="https://code.jquery.com/jquery-1.12.4.min.js"
+integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+crossorigin="anonymous"></script>
+
+<script>
+var	displayNum = 9, //表示数
+	target = $('.newsList .col'), //表示を切り替える対象
+	allLength = target.length, //対象の総数
+	showLength = allLength, //表示要素の数
+	omitHTML = '<li class="omit">…</li>',
+	pagerNum = (Number.isInteger(showLength/displayNum)) ? showLength/displayNum : Math.floor(showLength/displayNum)+1;
+var cond = {
+	year : '',
+	cat : ''
+}; //絞り込みで選択された値を格納
+	
+function targetDisplay(){ //showFlagを持つものを表示
+	target.hide();
+	for(var i=0;i<displayNum;i++){
+		target.filter('.showFlag').eq(i).show();
+	}
+};
+targetDisplay();
+
+function initPager(){ //表示要素の数に応じてページャーのHTMLを生成
+	var pagerHTML = '';
+	$('#pager').empty();
+	pagerNum = (Number.isInteger(showLength/displayNum)) ? showLength/displayNum : Math.floor(showLength/displayNum)+1;
+	for(var i=1;i<pagerNum+1;i++){
+		pagerHTML += '<li><button class="num'+i+'">'+i+'</button></li>'
+	}
+	$('#pager').append(pagerHTML);
+	$('#pager li').hide();
+	$('#pager li:nth-child(1) ,#pager li:nth-child(2) ,#pager li:nth-child(3) ,#pager li:nth-child(4) ,#pager li:last-child').show();
+	if(pagerNum > 5){
+		$('#pager li:last-child').before(omitHTML);
+	}
+	$('#pager >li:first-child button').addClass('current');
+};
+initPager();
+
+$('.selectWrap select').change(function(){
+	cond.year = $('#yearSelect').val();
+	cond.cat = $('#catSelect').val();
+	target.each(function(){
+		if($(this).attr('data-year').match(new RegExp(cond.year)) && $(this).attr('data-cat').match(new RegExp(cond.cat))){
+			$(this).addClass('showFlag');
+		}else{
+			$(this).removeClass('showFlag');
+		}
+	});
+	showLength = target.filter('.showFlag').length;
+	console.log(showLength)
+	targetDisplay();
+	initPager();
+});
+
+$(document).on('click','#pager button',function(){
+	$('#pager button').removeClass('current');
+	$(this).addClass('current');
+	var pageNum = parseInt($(this).text());
+	$(target).hide();
+	for(var i=0;i<displayNum;i++){
+		$(target).filter('.showFlag').eq(displayNum*(pageNum-1)+i).show();
+	}
+	if(pagerNum > 5){
+		$('#pager li').hide();
+		$('#pager .omit').remove();
+		if(pageNum <= 3){
+			$('#pager li:nth-child(1) ,#pager li:nth-child(2) ,#pager li:nth-child(3) ,#pager li:nth-child(4) ,#pager li:last-child').show();
+			$('#pager li:last-child').before(omitHTML);
+		}else if(4 <= pageNum && pageNum <= pagerNum -3){
+			$('#pager li:first-child').show().after(omitHTML);
+			$('#pager li:last-child').show().before(omitHTML);
+			$(this).parent('li').show();
+			$(this).parent('li').prev().show();
+			$(this).parent('li').next().show();
+		}else{
+			$('#pager li:nth-last-child(1) ,#pager li:nth-last-child(2) ,#pager li:nth-last-child(3) ,#pager li:nth-last-child(4) ,#pager li:first-child').show();
+			$('#pager li:first-child').after(omitHTML);
+		}
+	}
+});
+</script>
+
+</body>
+</html>
