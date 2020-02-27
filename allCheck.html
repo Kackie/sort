@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+ul{
+    list-style-type: none;
+    margin-left: 0;
+    margin-top: 0;
+}
+.wrap{
+    display: flex;
+	align-items:flex-start;
+    width: 1080px;
+    margin: 0 auto;
+}
+.sortControl{
+    width: 20%;
+}
+.itemList{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.itemList .col{
+    width: calc((100% - 60px)/3);
+    box-sizing: border-box;
+    padding: 10px;
+    display: block;
+    margin: 20px 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-left-width: 5px;
+	border-left-style: solid;
+	
+}
+.itemList .col.active{
+	/*animation: show 0.3s ease 0s;*/
+}
+.itemList .col[class*="gr1_01"]{
+	background: springgreen;
+}
+.itemList .col[class*="gr1_02"]{
+	background: lightpink;
+}
+.itemList .col[class*="gr1_03"]{
+	background: aqua;
+}
+.itemList .col[class*="gr1_04"]{
+	background: antiquewhite;
+}
+.itemList .col[class*="gr2_01"]{
+	text-shadow: 2px 2px 2px rgba(204,0,0,0.1);
+}
+.itemList .col[class*="gr2_02"]{
+	border-radius: 0 10px 10px 0;
+}
+.itemList .col[class*="gr2_03"]{
+	box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+.itemList .col[class*="gr2_04"]:before{
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 0;
+	height: 0;
+	border-width: border-width: 0 30px 30px 0;
+	border-color: transparent rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent;
+	border-style: solid;
+}
+.itemList .col[class*="gr2_04"]:after{
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: -1px;
+	right: -1px;
+	width: 0;
+	height: 0;
+	border-width: border-width: 0 30px 30px 0;
+	border-color: transparent white white transparent;
+	border-style: solid;
+}
+.itemList .col[class*="gr3_01"]{
+	border-left-color: #964f4c;
+}
+.itemList .col[class*="gr3_02"]{
+	border-left-color: #c0c0c0;
+}
+.itemList .col[class*="gr3_03"]{
+	border-left-color: #00a968;
+}
+.itemList .col[class*="gr3_04"]{
+	border-left-color: #fffafa;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="sortControl">
+    	<ul class="cond1">
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr1_01" data-group="0" checked><label for="gr1_01">くさ</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr1_02" data-group="0" checked><label for="gr1_02">ほのお</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr1_03" data-group="0" checked><label for="gr1_03">みず</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr1_04" data-group="0" checked><label for="gr1_04">ノーマル</label></span></li>
+        </ul>
+        <!-- /.cond1 -->
+        <ul class="cond2">
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr2_01" data-group="1" checked><label for="gr2_01">かいじゅう</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr2_02" data-group="1" checked><label for="gr2_02">ようせい</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr2_03" data-group="1" checked><label for="gr2_03">ひこう</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr2_04" data-group="1" checked><label for="gr2_04">タマゴみはっけん</label></span></li>
+        </ul>
+        <!-- /.cond2 -->  
+        <ul class="cond3">
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr3_01" data-group="2" checked><label for="gr3_01">カントー</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr3_02" data-group="2" checked><label for="gr3_02">ジョウト</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr3_03" data-group="2" checked><label for="gr3_03">ホウエン</label></span></li>
+            <li><span class="m_radio"><input name="" type="checkbox" id="gr3_04" data-group="2" checked><label for="gr3_04">シンオウ</label></span></li>
+        </ul>
+        <!-- /.cond3 -->
+         
+    </div>
+    <ul>
+        <li><span class="m_radio"><input name="" type="checkbox" id="allCheck"><label>全選択</label></span></li>
+    </ul> 
+    <!-- /.sortControl -->
+    <ul class="itemList">
+    	<li class="col gr1_01 gr2_01 gr3_01">フシギダネ</li>
+        <li class="col gr2_04 gr3_01">ミュウ</li>
+        <li class="col gr1_04 gr2_02 gr3_01">ラッキー</li>
+        <li class="col gr1_03 gr2_01 gr3_01">カメール</li>
+        <li class="col gr1_03 gr2_01 gr3_02">ワニノコ</li>
+        <li class="col gr1_03 gr2_02 gr3_02">マリル</li>
+        <li class="col gr1_01 gr2_02 gr3_02">ワタッコ</li>
+        <li class="col gr1_02 gr2_04 gr3_02">エンテイ</li>
+        <li class="col gr1_04 gr2_03 gr3_03">チルット</li>
+        <li class="col gr1_04 gr2_04 gr3_03">ルリリ</li>
+        <li class="col gr1_01 gr2_02 gr3_03">キノココ</li>
+        <li class="col gr1_03 gr2_04 gr3_03">カイオーガ</li>
+        <li class="col gr1_01 gr2_01 gr3_04">ナエトル</li>
+        <li class="col gr1_04 gr2_03 gr3_04">ムックル</li>
+        <li class="col gr1_01 gr2_02 gr3_04">チェリンボ</li>
+        <li class="col gr1_02 gr2_04 gr3_04">ヒードラン</li>
+    </ul><!-- /.itemList -->
+</div>
+<!-- /.wrap -->
+
+<script
+src="https://code.jquery.com/jquery-1.12.4.min.js"
+integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+crossorigin="anonymous"></script>
+<script>
+$(function(){
+
+    var	active = [];
+	var	allArr = [];
+    var showClass,
+		href,
+		param = '';
+    var activeClass = 'active',
+		sortControl = $('.sortControl'),
+        sortTarget = $('.itemList > .col'),
+		groupLength = 3,
+        checkLen = sortControl.find('input[type="checkbox"]').length;
+	if(location.search){
+        var onload = location.search.slice(1).replace(/group.=/g,"").split('?');
+        var defArr = [];
+        for(var i=0;i<onload.length;i++){
+            var filter = onload[i].split(',');
+            defArr.push(filter);
+        }
+        var defCheck = '#' +  defArr.join(',').replace(/,/g,',#');
+        $(defCheck).prop('checked','checked');
+        defArr = '.' + defArr.join('|.').replace(/,/g,',.');
+        defArr = defArr.split('|');
+        showClass = sortTarget;
+        for(var i=0;i<defArr.length;i++){
+            var filter = defArr[i];
+            showClass = showClass.filter(filter);
+        }
+        showClass.addClass(activeClass);
+			sortTarget.each(function(){
+				if($(this).hasClass(activeClass)){
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			});
+        
+    } else {
+		sortTarget.find('.col').addClass('active');
+	}
+    function checkFunc(){
+        active = [];
+		allArr = [];
+		param = '';
+		for(i=0;i<groupLength;i++){
+			var arr = [];
+			var filterArr = [];
+			if(sortControl.find('input[type="checkbox"][data-group="' + i + '"]:checked').length){
+				sortControl.find('input[type="checkbox"][data-group="' + i + '"]:checked').each(function(){
+					arr.push($(this).attr('id'));
+					filterArr.push('.' + $(this).attr('id'));
+				});
+			}
+			active[i] = arr;
+			if(filterArr.length){
+				allArr.push(filterArr);
+			}
+			param += (active[i].length) ? '?group' + i + '=' + active[i] : '';
+		}
+		
+		showClass = sortTarget;
+		
+		if(allArr.length){
+			for(j=0;j<allArr.length;j++){
+				var filter = allArr[j].join(',');
+				showClass = showClass.filter(filter);
+			}
+		}
+		
+		if($.isEmptyObject(param) !== true){
+			history.pushState(null,null,param);
+		}
+		if(sortControl.find('input[type="checkbox"]:checked').length){
+			sortTarget.removeClass(activeClass);
+			showClass.addClass(activeClass);
+			sortTarget.each(function(){
+				if($(this).hasClass(activeClass)){
+					if(!$(this).is(':visible')){
+						$(this).show().css({
+							'z-index':'1'
+						}).animate(
+							{
+								'z-index':'100'
+							},
+							{
+								duration:300,
+								step:function(now){
+									$(this).css({
+										transform:'scale('+ now/100 +')'
+									});
+								}
+							}
+						);
+					}
+				} else {
+					$(this).css({
+						'z-index':'100'
+					}).animate(
+						{
+							'z-index':'0'
+						},
+						{
+							duration:300,
+							step:function(now){
+								$(this).css({
+									transform:'scale('+ now*0.01 +')'
+								});
+							},
+							complete:function(){
+								$(this).hide();
+							}
+						}
+					);
+				}
+			});
+		} else {
+			sortTarget.show().addClass(activeClass).show().css({
+				'z-index':'1'
+			}).animate(
+				{
+					'z-index':'100'
+				},
+				{
+					duration:300,
+					step:function(now){
+						$(this).css({
+							transform:'scale('+ now/100 +')'
+						});
+					}
+				}
+			);
+			var defHref = location.href.replace(/\?.*$/,"");
+			history.pushState(null,null,defHref);
+		}
+    }
+	sortControl.find('input[type="checkbox"]').change(function(){
+		checkFunc();
+        if(sortControl.find('input[type="checkbox"]:checked').length === 0){
+            $('#allCheck').prop('checked',true);
+        }else{
+            $('#allCheck').prop('checked',false);
+        }
+	});
+    $('#allCheck').change(function(){
+        console.log($(this).prop('checked'))
+        if($(this).prop('checked')){
+            sortControl.find('input[type="checkbox"]').prop('checked',false);
+        }else{
+            sortControl.find('input[type="checkbox"]').prop('checked',true);
+        }
+        checkFunc();
+    });
+});
+</script>
+</body>
+</html>
